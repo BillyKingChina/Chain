@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 using Tortuga.Anchor;
 using Tortuga.Chain.AuditRules;
 using Tortuga.Chain.CommandBuilders;
@@ -808,6 +809,21 @@ namespace Tortuga.Chain.SqlServer
             return DatabaseMetadata;
         }
 
+        internal static void ExecuteCommand(SqlConnection con, SqlTransaction trans, string commandText)
+        {
+            using (var cmd = new SqlCommand(commandText, con, trans))
+            {
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        internal static async Task ExecuteCommandAsync(SqlConnection con, SqlTransaction trans, string commandText)
+        {
+            using (var cmd = new SqlCommand(commandText, con, trans))
+            {
+                await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
+            }
+        }
     }
 }
 

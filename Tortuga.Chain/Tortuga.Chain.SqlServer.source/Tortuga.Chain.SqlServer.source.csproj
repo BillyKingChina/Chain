@@ -93,6 +93,7 @@
     <Compile Include="shared\SqlServerExtensions.cs" />
     <Compile Include="shared\SqlServerLimitOption.cs" />
     <Compile Include="shared\SqlServer\AbstractSqlServerMetadataCache.cs" />
+    <Compile Include="shared\SqlServer\Appenders\ExecutionPlanAppender.cs" />
     <Compile Include="shared\SqlServer\Appenders\NotifyChangeAppender`1.cs" />
     <Compile Include="shared\SqlServer\CommandBuilders\OleDbSqlServerDeleteMany.cs" />
     <Compile Include="shared\SqlServer\CommandBuilders\SqlServerDeleteMany.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="shared\SqlServer\SqlServerAppenders.cs" />
     <Compile Include="shared\SqlServer\OleDbSqlServerDataSourceBase.cs" />
     <Compile Include="shared\SqlServer\OleDbSqlServerDataSourceBase.Interfaces.cs" />
+    <Compile Include="shared\SqlServer\SqlServerCommandExecutionMode.cs" />
     <Compile Include="shared\SqlServer\SqlServerDataSourceBase.Interfaces.cs" />
     <Compile Include="shared\SqlServer\SqlServerEffectiveSettings.cs" />
     <Compile Include="shared\SqlServer\SqlServerCommandExecutionToken.cs" />

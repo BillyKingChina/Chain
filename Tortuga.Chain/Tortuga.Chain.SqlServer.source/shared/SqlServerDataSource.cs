@@ -374,10 +374,17 @@ namespace Tortuga.Chain
             var startTime = DateTimeOffset.Now;
             OnExecutionStarted(executionToken, startTime, state);
 
+            var executionModel = (executionToken as SqlServerCommandExecutionToken)?.ExecutionMode ?? SqlServerCommandExecutionMode.Materializer;
+
+            int? rows;
+
             try
             {
                 using (var con = CreateConnection())
                 {
+                    if (executionModel == SqlServerCommandExecutionMode.ExecutionPlanXml)
+                        ExecuteCommand(con, null, "SET SHOWPLAN_XML ON");
+
                     using (var cmd = new SqlCommand())
                     {
                         cmd.Connection = con;
@@ -390,11 +397,15 @@ namespace Tortuga.Chain
 
                         executionToken.ApplyCommandOverrides(cmd);
 
-                        var rows = implementation(cmd);
+                        rows = implementation(cmd);
                         executionToken.RaiseCommandExecuted(cmd, rows);
                         OnExecutionFinished(executionToken, startTime, DateTimeOffset.Now, rows, state);
-                        return rows;
                     }
+
+                    if (executionModel == SqlServerCommandExecutionMode.ExecutionPlanXml)
+                        ExecuteCommand(con, null, "SET SHOWPLAN_XML OFF");
+
+                    return rows;
                 }
             }
             catch (Exception ex)
@@ -498,10 +509,17 @@ namespace Tortuga.Chain
             var startTime = DateTimeOffset.Now;
             OnExecutionStarted(executionToken, startTime, state);
 
+            var executionModel = (executionToken as SqlServerCommandExecutionToken)?.ExecutionMode ?? SqlServerCommandExecutionMode.Materializer;
+
+            int? rows;
+
             try
             {
                 using (var con = await CreateConnectionAsync(cancellationToken).ConfigureAwait(false))
                 {
+                    if (executionModel == SqlServerCommandExecutionMode.ExecutionPlanXml)
+                        await ExecuteCommandAsync(con, null, "SET SHOWPLAN_XML ON");
+
                     using (var cmd = new SqlCommand())
                     {
                         cmd.Connection = con;
@@ -514,11 +532,15 @@ namespace Tortuga.Chain
 
                         executionToken.ApplyCommandOverrides(cmd);
 
-                        var rows = await implementation(cmd).ConfigureAwait(false);
+                        rows = await implementation(cmd).ConfigureAwait(false);
                         executionToken.RaiseCommandExecuted(cmd, rows);
                         OnExecutionFinished(executionToken, startTime, DateTimeOffset.Now, rows, state);
-                        return rows;
                     }
+
+                    if (executionModel == SqlServerCommandExecutionMode.ExecutionPlanXml)
+                        await ExecuteCommandAsync(con, null, "SET SHOWPLAN_XML OFF");
+
+                    return rows;
                 }
             }
             catch (Exception ex)

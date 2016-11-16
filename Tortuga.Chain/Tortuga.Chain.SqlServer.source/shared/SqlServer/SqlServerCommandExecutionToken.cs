@@ -70,5 +70,7 @@ namespace Tortuga.Chain.SqlServer
             }
 #endif
         }
+
+        internal SqlServerCommandExecutionMode ExecutionMode { get; set; }
     }
 }

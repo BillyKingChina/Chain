@@ -87,6 +87,7 @@
     <Compile Include="Class2Databases\InsertBatchTests.cs" />
     <Compile Include="Class2Databases\TableFunctionTests.cs" />
     <Compile Include="Class2Databases\ProcedureTests.cs" />
+    <Compile Include="ExecutionPlanTests.cs" />
     <Compile Include="Materializers\MaterializerTests.cs" />
     <Compile Include="Materializers\ModelTests.cs" />
     <Compile Include="Metadata\MetadataTests.cs" />

@@ -12,7 +12,7 @@ namespace Tortuga.Chain.Materializers
     /// </summary>
     /// <typeparam name="TCommand">The type of the t command type.</typeparam>
     /// <typeparam name="TParameter">The type of the t parameter type.</typeparam>
-    /// <typeparam name="TResult">The tyCommandTextpe of the t result type.</typeparam>
+    /// <typeparam name="TResult">The type of the t result type.</typeparam>
     /// <seealso cref="Materializer{TCommand, TParameter}" />
     public abstract class Materializer<TCommand, TParameter, TResult> : Materializer<TCommand, TParameter>, ILink<TResult>
         where TCommand : DbCommand
